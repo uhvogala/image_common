@@ -37,6 +37,7 @@
 
 #include <ros/ros.h>
 #include <message_filters/simple_filter.h>
+#include <boost/bind/bind.hpp>
 
 #include "image_transport/image_transport.h"
 
@@ -107,7 +108,7 @@ public:
   {
     unsubscribe();
 
-    sub_ = it.subscribe(base_topic, queue_size, boost::bind(&SubscriberFilter::cb, this, _1),
+    sub_ = it.subscribe(base_topic, queue_size, boost::bind(&SubscriberFilter::cb, this, boost::placeholders::_1),
                         ros::VoidPtr(), transport_hints);
   }
 

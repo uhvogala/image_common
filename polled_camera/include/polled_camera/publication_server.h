@@ -38,6 +38,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/CameraInfo.h>
+#include <boost/bind/bind.hpp>
 #include "polled_camera/GetPolledImage.h"
 
 #include <ros/macros.h>
@@ -129,7 +130,7 @@ PublicationServer advertise(ros::NodeHandle& nh, const std::string& service,
                                          sensor_msgs::Image&, sensor_msgs::CameraInfo&),
                             T* obj)
 {
-  return advertise(nh, service, boost::bind(fp, obj, _1, _2, _3, _4));
+  return advertise(nh, service, boost::bind(fp, obj, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4));
 }
 
 /**
@@ -142,7 +143,7 @@ PublicationServer advertise(ros::NodeHandle& nh, const std::string& service,
                                          sensor_msgs::Image&, sensor_msgs::CameraInfo&),
                             const boost::shared_ptr<T>& obj)
 {
-  return advertise(nh, service, boost::bind(fp, obj.get(), _1, _2, _3, _4), obj);
+  return advertise(nh, service, boost::bind(fp, obj.get(), boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4), obj);
 }
 
 } //namespace polled_camera

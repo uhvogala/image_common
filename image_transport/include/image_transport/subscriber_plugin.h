@@ -36,6 +36,7 @@
 #define IMAGE_TRANSPORT_SUBSCRIBER_PLUGIN_H
 
 #include <ros/ros.h>
+#include <boost/bind/bind.hpp>
 #include <sensor_msgs/Image.h>
 #include <boost/noncopyable.hpp>
 #include "image_transport/transport_hints.h"
@@ -88,7 +89,7 @@ public:
                  void(T::*fp)(const sensor_msgs::ImageConstPtr&), T* obj,
                  const TransportHints& transport_hints = TransportHints())
   {
-    return subscribe(nh, base_topic, queue_size, boost::bind(fp, obj, _1), ros::VoidPtr(), transport_hints);
+    return subscribe(nh, base_topic, queue_size, boost::bind(fp, obj, boost::placeholders::_1), ros::VoidPtr(), transport_hints);
   }
 
   /**
@@ -100,7 +101,7 @@ public:
                  const boost::shared_ptr<T>& obj,
                  const TransportHints& transport_hints = TransportHints())
   {
-    return subscribe(nh, base_topic, queue_size, boost::bind(fp, obj.get(), _1), obj, transport_hints);
+    return subscribe(nh, base_topic, queue_size, boost::bind(fp, obj.get(), boost::placeholders::_1), obj, transport_hints);
   }
 
   /**
