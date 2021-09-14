@@ -164,7 +164,7 @@ public:
                                                 const sensor_msgs::CameraInfoConstPtr&), T* obj,
                                    const TransportHints& transport_hints = TransportHints())
   {
-    return subscribeCamera(base_topic, queue_size, boost::bind(fp, obj, boost::placeholders::_1, std::placeholders::_2), ros::VoidPtr(),
+    return subscribeCamera(base_topic, queue_size, boost::bind(fp, obj, boost::placeholders::_1, boost::placeholders::_2), ros::VoidPtr(),
                            transport_hints);
   }
 
@@ -179,7 +179,7 @@ public:
                                    const boost::shared_ptr<T>& obj,
                                    const TransportHints& transport_hints = TransportHints())
   {
-    return subscribeCamera(base_topic, queue_size, boost::bind(fp, obj.get(), boost::placeholders::_1, std::placeholders::_2), obj,
+    return subscribeCamera(base_topic, queue_size, boost::bind(fp, obj.get(), boost::placeholders::_1, boost::placeholders::_2), obj,
                            transport_hints);
   }
 
